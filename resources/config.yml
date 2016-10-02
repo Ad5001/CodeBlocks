@@ -1,0 +1,44 @@
+---
+# Welcome to CodeBlocks config !
+# CodeBlocks is a plugin that allows you to execute PHP code when activating the blocks.
+activate_on_click: true
+activate_on_redstone: true
+activate_on_walk: true
+
+# Who can create code blocks? Those who know a password that you will enter below (enter "password"), those who have the permission codeblocks.modify (enter "perm")
+# or the ones who have the username listed below ("usernames")
+Type: perm
+
+# Password. Only if you specified "password" upper.
+password: "Hey"
+
+# Usernames. Only if you specified "usernames" upper.
+usernames:
+  - ExampleOfPlayer
+  - ChangeThemToYourPlayerUsername
+
+
+# Security things ! Since it's executing some arbitrary code, please consider enable these functions to protect you're server from hackers that would exploit this plugin to destroy your VPS/Server !
+# When these lines are set to true,all function described above them will be disabled.
+
+# Disables directory and file management functions
+FileProtection: true
+
+# Exec functions ! **DISABLE THEM !!!!!!!** MIGHT INTRODUCE VIRUSES !
+ExecProtection: true
+
+# Loops . You might need to disable them or if they are infinite loops, they CAN crash your server
+LoopProtection: true
+
+# Internet connections functions. Those function might cause lag your server and could als introduce viruses into your computer or track your server.
+InternetProtection: true
+
+# Exit functions. Those functions stops your server.
+ExitProtection: true
+
+# DispatchCommand. This function execute command as someone else !
+DispatchCommandProtection: true
+
+# Server functions. This prevent from accessing any data on the Server.
+ServerProtection: true
+...

@@ -8,7 +8,7 @@ namespace Ad5001\CodeBlocks\tasks;
 use pocketmine\Server;
 
 
-use pocketmine\schedulerPluginTask;
+use pocketmine\scheduler\PluginTask;
 
 
 use pocketmine\Player;
@@ -23,7 +23,7 @@ use Ad5001\CodeBlocks\Main;
 
 
 
-class Task1 extends PluginTask {
+class RedstoneFetchTask extends PluginTask {
 
 
 

@@ -4,6 +4,7 @@
 activate_on_click: true
 activate_on_redstone: true
 activate_on_walk: true
+activate_on_break: true
 
 # Who can create code blocks? Those who know a password that you will enter below (enter "password"), those who have the permission codeblocks.modify (enter "perm")
 # or the ones who have the username listed below ("usernames")

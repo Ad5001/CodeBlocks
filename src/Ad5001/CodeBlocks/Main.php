@@ -68,34 +68,22 @@ class Main extends PluginBase implements Listener {
         $cfg = new Config($event->getPlayer()->getLevel()->getFolderName() . "plugins_blocks/Ad5001/CodeBlocks.json");
         if(isset($this->editors[$event->getPlayer()->getName()])) {
             $cfg->set($event->getBlock()->x . "@" . $event->getBlock()->y ."@" .$event->getBlock()->z, $this->editors[$event->getPlayer()->getName()]);
-            $sender->sendMessage("§4§l§o[§r§l§7CodeBlocks§o§4]§f§r Succefully setted code " . $this->editors[$event->getPlayer()->getName()] . " to this block (" . $event->getBlock()->getName() . ").");
+            $sender->sendMessage("§4§l§o[§r§l§7CodeBlocks§o§4]§f§r Succefully set code " . $this->editors[$event->getPlayer()->getName()] . " to this block (" . $event->getBlock()->getName() . ").");
+			return true;
         } elseif (!is_null($cfg->get($event->getBlock()->x . "@" . $event->getBlock()->y ."@" .$event->getBlock()->z)) && ($this->getConfig()->get("activate_on_click") == "true" or $this->getConfig()->get("activate_on_click"))) {
-            $env = new SecureEvalEnv($cfg->get($event->getBlock()->x . "@" . $event->getBlock()->y ."@" .$event->getBlock()->z));
+			$id = time() + $event->getBlock()->x * $event->getBlock()->z + count($cfg->getAll()) + count(scan_dir($this->getDataFolder() . "tmp"));
+			$vars = ["player" => $event->getPlayer(), "sender" => $event->getPlayer(), "block" => $event->getBlock(), "method" => SecureEvalEnv::INTERACT];
+            $env = new SecureEvalEnv($cfg->get($event->getBlock()->x . "@" . $event->getBlock()->y ."@" .$event->getBlock()->z), $id, $vars);
+			return true;
         }
 	}
-
-
-
-    public function activate(\pocketmine\block\Block $block, \pocketmine\level\Level $level) {
-        if(!is_dir($level->getFolderName() . "plugins_blocks")) {
-			@mkdir($level->getFolderName() . "plugins_blocks");
-		}
-		if(!is_dir($level->getFolderName() . "plugins_blocks/Ad5001")) {
-			@mkdir($level->getFolderName() . "plugins_blocks/Ad5001");
-		}
-		if(!file_exists($level->getFolderName() . "plugins_blocks/Ad5001/CodeBlocks.json")) {
-		        file_put_contents($level->getFolderName() . "plugins_blocks/Ad5001/CodeBlocks.json", "{}");
-		}
-    }
 	
 	
 	
 	
 	public function onLoad(){
 		
-		
 		$this->saveDefaultConfig();
-		
 		
 	}
 	
@@ -104,18 +92,14 @@ class Main extends PluginBase implements Listener {
 	
 	public function onCommand(CommandSender $sender, Command $cmd, $label, array $args){
 		
-		
 		switch($cmd->getName()){
 			
-			
-			case 'changeblock':
+			case 'changecodeblock':
 			
 			
 			break;
 			
-			
 		}
-		
 		
 		return false;
 		

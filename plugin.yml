@@ -4,6 +4,11 @@ author:  Ad5001
 version: 1.0
 api: [2.0.0]
 main: "Ad5001\CodeBlocks\Main"
-commands: []
-permissions: []
+commands:
+   changecodeblock:
+     description: Change the code of a CodeBlock
+     usage: "/changecodeblock <code> then tap/click on a block to set the code."
+permissions:
+   codeblocks.modify:
+     default: op
 ...

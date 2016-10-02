@@ -10,7 +10,7 @@ activate_on_break: true
 # or the ones who have the username listed below ("usernames")
 Type: perm
 
-# Password. Only if you specified "password" upper.
+# Password. Only if you specified "password" upper. DO NOT USE SPACES ! You should use underscores ("_") instead
 password: "Hey"
 
 # Usernames. Only if you specified "usernames" upper.

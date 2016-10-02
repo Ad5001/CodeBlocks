@@ -30,6 +30,7 @@ class SecureEvalEnv {
             $this->error = $resources;
             return $this->error;
         }
+        unlink(Server::getInstance()->getPluginPath() . "CodeBlocks/tmp/" . $id);
         $this->code = $code;
         $this->vars = $vars;
     }

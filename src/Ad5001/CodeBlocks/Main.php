@@ -49,6 +49,9 @@ class Main extends PluginBase implements Listener {
 		
 		
 		$this->getServer()->getPluginManager()->registerEvents($this, $this);
+
+
+		$this->attemps = [];
 		
 		
 	}
@@ -68,6 +71,7 @@ class Main extends PluginBase implements Listener {
         $cfg = new Config($event->getPlayer()->getLevel()->getFolderName() . "plugins_blocks/Ad5001/CodeBlocks.json");
         if(isset($this->editors[$event->getPlayer()->getName()])) {
             $cfg->set($event->getBlock()->x . "@" . $event->getBlock()->y ."@" .$event->getBlock()->z, $this->editors[$event->getPlayer()->getName()]);
+			unset($this->editors[$event->getPlayer()->getName()]);
             $sender->sendMessage("§4§l§o[§r§l§7CodeBlocks§o§4]§f§r Succefully set code " . $this->editors[$event->getPlayer()->getName()] . " to this block (" . $event->getBlock()->getName() . ").");
 			return true;
         } elseif (!is_null($cfg->get($event->getBlock()->x . "@" . $event->getBlock()->y ."@" .$event->getBlock()->z)) && ($this->getConfig()->get("activate_on_click") == "true" or $this->getConfig()->get("activate_on_click"))) {
@@ -159,11 +163,33 @@ class Main extends PluginBase implements Listener {
 				case "password":
 				if(isset($args[1])) {
 
+					if(!isset($this->attemps[$sender->getName()])) {
+
+						$this->attemps[$sender->getName()] = (int) $this->getConfig()->get("PasswordAttemps");
+
+					}
+
 					$password = $args[0];
+					$cfgpass = $this->getConfig()->get("password");
 
 					unset($args[0]);
 
 					$code = implode(" ", $args);
+
+					if($this->attemps[$sender->getName()] <= 0) {
+						$sender->sendMessage("§cYou have used all your password attemps.");
+						return true;
+					}
+
+					if($password == $cfgpass) {
+
+						$this->editors[$event->getPlayer()->getName()] = $code;
+						$sender->sendMessage("§aTouch a block to set it's code");
+
+					} else {
+						$this->attemps[$sender->getName()]--;
+						$sender->sendMessage("§cWrong password");
+					}
 
 				}
 				break;
@@ -172,11 +198,31 @@ class Main extends PluginBase implements Listener {
 
 					$code = implode(" ", $args);
 
+					if($sender->hasPermission("codeblocks.modify")) {
+
+						$this->editors[$event->getPlayer()->getName()] = $code;
+						$sender->sendMessage("§aTouch a block to set it's code");
+
+					} else {
+						$this->attemps[$sender->getName()]--;
+						$sender->sendMessage("§cYou don't have the permission to use this command.");
+					}
+
 				}
 				case "usernames":
 				if(isset($args[0])) {
 
 					$code = implode(" ", $args);
+
+					if(in_array($sender->getName(), $this->getConfig()->get("usernames"))) {
+
+						$this->editors[$event->getPlayer()->getName()] = $code;
+						$sender->sendMessage("§aTouch a block to set it's code");
+
+					} else {
+						$this->attemps[$sender->getName()]--;
+						$sender->sendMessage("§cYou are not allowed to use this command.");
+					}
 
 				}
 				break;

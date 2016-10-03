@@ -12,6 +12,8 @@ Type: perm
 
 # Password. Only if you specified "password" upper. DO NOT USE SPACES ! You should use underscores ("_") instead
 password: "Hey"
+# Choose how many times a player can fail at the password. Number of attemps by player will be reset every restart
+PasswordAttemps: 5
 
 # Usernames. Only if you specified "usernames" upper.
 usernames:

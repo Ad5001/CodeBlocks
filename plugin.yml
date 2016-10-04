@@ -3,7 +3,7 @@ name: CodeBlocks
 author:  Ad5001
 version: 1.0
 api: [2.0.0]
-main: "Ad5001\CodeBlocks\Main"
+main: Ad5001\CodeBlocks\Main
 commands:
    changecodeblock:
      description: Change the code of a CodeBlock

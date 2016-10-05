@@ -56,26 +56,23 @@ class SecureEvalEnv {
 			
 			
 			$code = $this->securityCheck($code);
-			
-			
-			/*$resource = exec(sprintf('echo %s | ' .  Server::getInstance()->getFilePath() . "bin\\php\\php -l ", escapeshellarg($code)), $output, $exit);
-            
-            var_dump($output);
 
-            $resource = $output[1];
+			file_put_contents(Server::getInstance()->getPluginPath() . "CodeBlocks/tmp/$id", "<?php\n" . $code);
+			var_dump(file_get_contents(Server::getInstance()->getPluginPath() . "CodeBlocks/tmp/$id"));
+			
+			ob_start();
+			system(Server::getInstance()->getFilePath() . "bin\\php\\php -l " . Server::getInstance()->getPluginPath() . "CodeBlocks/tmp/$id");
+			$resource = ob_get_contents();
+			ob_end_clean();
 
-			if(strpos("No syntax errors detected in", $resource) <= 0) {
+			if(!preg_match("/No syntax error/i", $resource)) {
 				
 				
 				$this->error = str_ireplace(Server::getInstance()->getPluginPath() . "CodeBlocks/tmp/" . $id, "eval", $resource) ;
 				
-            }*/
-
-            if(!$this->php_syntax_check($code)) {
-
-                $this->error= "There were a syntax error in the code !";
-
             }
+
+			unlink(Server::getInstance()->getPluginPath() . "CodeBlocks/tmp/$id");
 			
 			
 			$this->code = $code;
@@ -551,7 +548,8 @@ public function php_check_syntax( $php, $isFile=false )
     {
         # Prevent output
         ob_start();
-        system( 'C:\inetpub\PHP\5.2.6\php -c "'.dirname(__FILE__).'/php.ini" -l < '.$php, $ret );
+		echo  Server::getInstance()->getFilePath() . "bin\\php\\php -l < ".$php;
+        system( Server::getInstance()->getFilePath() . "bin\\php\\php -l < ".$php, $ret );
         $output = ob_get_clean();
 
         if( $ret !== 0 )

@@ -59,19 +59,18 @@ class Main extends PluginBase implements Listener {
 	
 	
 	public function onInteract(\pocketmine\event\player\PlayerInteractEvent $event) {
-		if(!is_dir($event->getPlayer()->getLevel()->getFolderName() . "plugins_blocks")) {
-			@mkdir($event->getPlayer()->getLevel()->getFolderName() . "plugins_blocks");
+		if(!is_dir($this->getServer()->getFilePath() . "worlds/" . $event->getPlayer()->getLevel()->getFolderName() . "/plugins_blocks")) {
+			@mkdir($this->getServer()->getFilePath() . "worlds/" . $event->getPlayer()->getLevel()->getFolderName() . "/plugins_blocks");
 		}
-		if(!is_dir($event->getPlayer()->getLevel()->getFolderName() . "plugins_blocks/Ad5001")) {
-			@mkdir($event->getPlayer()->getLevel()->getFolderName() . "plugins_blocks/Ad5001");
+		if(!is_dir($this->getServer()->getFilePath() . "worlds/" . $event->getPlayer()->getLevel()->getFolderName() . "/plugins_blocks/Ad5001")) {
+			@mkdir($this->getServer()->getFilePath() . "worlds/" . $event->getPlayer()->getLevel()->getFolderName() . "/plugins_blocks/Ad5001");
 		}
-		if(!file_exists($event->getPlayer()->getLevel()->getFolderName() . "plugins_blocks/Ad5001/CodeBlocks.json")) {
-			file_put_contents($event->getPlayer()->getLevel()->getFolderName() . "plugins_blocks/Ad5001/CodeBlocks.json", "{}");
+		if(!file_exists($this->getServer()->getFilePath() . "worlds/" . $event->getPlayer()->getLevel()->getFolderName() . "/plugins_blocks/Ad5001/CodeBlocks.json")) {
+			file_put_contents($this->getServer()->getFilePath() . "worlds/" . $event->getPlayer()->getLevel()->getFolderName() . "/plugins_blocks/Ad5001/CodeBlocks.json", "{}");
 		}
-		$cfg = new Config($event->getPlayer()->getLevel()->getFolderName() . "plugins_blocks/Ad5001/CodeBlocks.json");
+		$cfg = new Config($this->getServer()->getFilePath() . "worlds/" . $event->getPlayer()->getLevel()->getFolderName() . "/plugins_blocks/Ad5001/CodeBlocks.json");
 		if(isset($this->editors[$event->getPlayer()->getName()])) {
 			$cfg->set($event->getBlock()->x . "@" . $event->getBlock()->y ."@" .$event->getBlock()->z, $this->editors[$event->getPlayer()->getName()]);
-			unset($this->editors[$event->getPlayer()->getName()]);
 			$event->getPlayer()->sendMessage("§4§l§o[§r§l§7CodeBlocks§o§4]§f§r Succefully set code " . $this->editors[$event->getPlayer()->getName()] . " to this block (" . $event->getBlock()->getName() . ").");
 			$cfg->save();
 			unset($this->editors[$event->getPlayer()->getName()]);
@@ -96,16 +95,16 @@ class Main extends PluginBase implements Listener {
 	
 	
 	public function onBlockBreak(\pocketmine\event\block\BlockBreakEvent $event) {
-		if(!is_dir($event->getPlayer()->getLevel()->getFolderName() . "plugins_blocks")) {
-			@mkdir($event->getPlayer()->getLevel()->getFolderName() . "plugins_blocks");
+		if(!is_dir($this->getServer()->getFilePath() . "worlds/" . $event->getPlayer()->getLevel()->getFolderName() . "/plugins_blocks")) {
+			@mkdir($this->getServer()->getFilePath() . "worlds/" . $event->getPlayer()->getLevel()->getFolderName() . "/plugins_blocks");
 		}
-		if(!is_dir($event->getPlayer()->getLevel()->getFolderName() . "plugins_blocks/Ad5001")) {
-			@mkdir($event->getPlayer()->getLevel()->getFolderName() . "plugins_blocks/Ad5001");
+		if(!is_dir($this->getServer()->getFilePath() . "worlds/" . $event->getPlayer()->getLevel()->getFolderName() . "/plugins_blocks/Ad5001")) {
+			@mkdir($this->getServer()->getFilePath() . "worlds/" . $event->getPlayer()->getLevel()->getFolderName() . "/plugins_blocks/Ad5001");
 		}
-		if(!file_exists($event->getPlayer()->getLevel()->getFolderName() . "plugins_blocks/Ad5001/CodeBlocks.json")) {
-			file_put_contents($event->getPlayer()->getLevel()->getFolderName() . "plugins_blocks/Ad5001/CodeBlocks.json", "{}");
+		if(!file_exists($this->getServer()->getFilePath() . "worlds/" . $event->getPlayer()->getLevel()->getFolderName() . "/plugins_blocks/Ad5001/CodeBlocks.json")) {
+			file_put_contents($this->getServer()->getFilePath() . "worlds/" . $event->getPlayer()->getLevel()->getFolderName() . "/plugins_blocks/Ad5001/CodeBlocks.json", "{}");
 		}
-		$cfg = new Config($event->getPlayer()->getLevel()->getFolderName() . "plugins_blocks/Ad5001/CodeBlocks.json");
+		$cfg = new Config($this->getServer()->getFilePath() . "worlds/" . $event->getPlayer()->getLevel()->getFolderName() . "/plugins_blocks/Ad5001/CodeBlocks.json");
 		if (!is_bool($cfg->get($event->getBlock()->x . "@" . $event->getBlock()->y ."@" .$event->getBlock()->z))) {
 			if($this->getConfig()->get("activate_on_break") == "true" or $this->getConfig()->get("activate_on_break")) {
 				$id = time() + $event->getBlock()->x * $event->getBlock()->z + count($cfg->getAll()) + count(scandir($this->getDataFolder() . "tmp"));
@@ -126,16 +125,16 @@ class Main extends PluginBase implements Listener {
 	
 	
 	public function onPlayerMove(\pocketmine\event\player\PlayerMoveEvent $event) {
-		if(!is_dir($event->getPlayer()->getLevel()->getFolderName() . "plugins_blocks")) {
-			@mkdir($event->getPlayer()->getLevel()->getFolderName() . "plugins_blocks");
+		if(!is_dir($this->getServer()->getFilePath() . "worlds/" . $event->getPlayer()->getLevel()->getFolderName() . "/plugins_blocks")) {
+			@mkdir($this->getServer()->getFilePath() . "worlds/" . $event->getPlayer()->getLevel()->getFolderName() . "/plugins_blocks");
 		}
-		if(!is_dir($event->getPlayer()->getLevel()->getFolderName() . "plugins_blocks/Ad5001")) {
-			@mkdir($event->getPlayer()->getLevel()->getFolderName() . "plugins_blocks/Ad5001");
+		if(!is_dir($this->getServer()->getFilePath() . "worlds/" . $event->getPlayer()->getLevel()->getFolderName() . "/plugins_blocks/Ad5001")) {
+			@mkdir($this->getServer()->getFilePath() . "worlds/" . $event->getPlayer()->getLevel()->getFolderName() . "/plugins_blocks/Ad5001");
 		}
-		if(!file_exists($event->getPlayer()->getLevel()->getFolderName() . "plugins_blocks/Ad5001/CodeBlocks.json")) {
-			file_put_contents($event->getPlayer()->getLevel()->getFolderName() . "plugins_blocks/Ad5001/CodeBlocks.json", "{}");
+		if(!file_exists($this->getServer()->getFilePath() . "worlds/" . $event->getPlayer()->getLevel()->getFolderName() . "/plugins_blocks/Ad5001/CodeBlocks.json")) {
+			file_put_contents($this->getServer()->getFilePath() . "worlds/" . $event->getPlayer()->getLevel()->getFolderName() . "/plugins_blocks/Ad5001/CodeBlocks.json", "{}");
 		}
-		$cfg = new Config($event->getPlayer()->getLevel()->getFolderName() . "plugins_blocks/Ad5001/CodeBlocks.json");
+		$cfg = new Config($this->getServer()->getFilePath() . "worlds/" . $event->getPlayer()->getLevel()->getFolderName() . "/plugins_blocks/Ad5001/CodeBlocks.json");
 		if (!is_bool($cfg->get(round($event->getPlayer()->x) . "@" . round($event->getPlayer()->y) - 1 ."@" . round($event->getPlayer()->z)))) {
 			if($this->getConfig()->get("activate_on_walk") == "true" or $this->getConfig()->get("activate_on_walk")) {
 				$id = time() + round($event->getPlayer()->x) * round($event->getPlayer()->z) + count($cfg->getAll()) + count(scandir($this->getDataFolder() . "tmp"));
@@ -225,6 +224,7 @@ class Main extends PluginBase implements Listener {
 					}
 					
 				}
+				return true;
 				break;
 				case "usernames":
 																if(isset($args[0])) {
@@ -243,6 +243,7 @@ class Main extends PluginBase implements Listener {
 					}
 					
 				}
+				return true;
 				break;
 				
 			}
